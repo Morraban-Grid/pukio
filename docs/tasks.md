@@ -60,7 +60,7 @@ Cada tarea incluye: identificador, descripción, capa/componente afectado y crit
 - [x] **TASK-E1-SEC-03** — Verificar que el `application.properties` de cada módulo usa **exclusivamente placeholders** `${VAR}` para host, puerto y credenciales de base de datos, y que no contiene ningún valor hardcodeado. *(REQ 7.2)*
 - [x] **TASK-E1-SEC-04** — Añadir al `README.md` raíz una sección visible **"⚠️ Seguridad — Archivos que NUNCA deben subirse a GitHub"** con la tabla de archivos excluidos y las instrucciones de configuración local para nuevos desarrolladores. *(REQ 7.5)*
 - [x] **TASK-E1-SEC-05** — Crear el archivo `docs/security.md` con la estrategia completa de gestión de secretos: configuración local (`application-secrets.properties`), procedimiento de onboarding, y el protocolo de emergencia si un secreto es commiteado accidentalmente (rotar credencial → `git filter-repo` → force-push). *(REQ 7.5)*
-- [ ] **TASK-E1-SEC-06** — Realizar una auditoría manual del primer commit: revisar que ningún archivo commiteado contiene valores reales de contraseñas, IPs internas, puertos o usuarios de base de datos. *(REQ 7.1, 7.2)*
+- [x] **TASK-E1-SEC-06** — Realizar una auditoría manual del primer commit: revisar que ningún archivo commiteado contiene valores reales de contraseñas, IPs internas, puertos o usuarios de base de datos. *(REQ 7.1, 7.2)*
 
 ---
 
