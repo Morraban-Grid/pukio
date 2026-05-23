@@ -82,7 +82,7 @@ Cada tarea incluye: identificador, descripción, capa/componente afectado y crit
 
 ### E1-G3: Módulo `pukio-maintenance` — Sistema de Mantenimiento
 
-- [ ] **TASK-E1-17** — Crear la clase principal `MaintenanceApplication.java` con menú de consola (o UI básica Swing).
+- [ ] **TASK-E1-17** — Crear la clase principal `MaintenanceApplication.java` con menú de consola (y UI básica Swing).
 - [ ] **TASK-E1-18** — Implementar `ProductService.java`: métodos `createProduct()`, `updateProduct()`, `deleteProduct()`, `findBySku()`, `listAll()`. Usa `IndexedFileStore<String, ProductRecord>`. *(REQ 1.1)*
 - [ ] **TASK-E1-19** — Implementar `InventoryService.java`: métodos `updateStock()`, `decrementStock()`, `flagOutOfStock()`, `getStock()`. Usa `IndexedFileStore<String, InventoryRecord>`. *(REQ 1.2)*
 - [ ] **TASK-E1-20** — Implementar validación de SKU único al crear producto (búsqueda en índice antes de insertar). *(REQ 1.1)*
