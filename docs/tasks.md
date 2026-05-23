@@ -66,11 +66,11 @@ Cada tarea incluye: identificador, descripción, capa/componente afectado y crit
 
 ### E1-G2: Módulo `pukio-common` — API de Archivos Indexados
 
-- [ ] **TASK-E1-06** — Crear el modelo `ProductRecord.java`: campos `sku`, `name`, `price`, `category`, `description`, `deleted`, con serialización binaria (`Serializable`). *(REQ 1.1)*
-- [ ] **TASK-E1-07** — Crear el modelo `InventoryRecord.java`: campos `sku`, `quantity`, `outOfStock`, `lastUpdated`, con serialización binaria. *(REQ 1.2)*
-- [ ] **TASK-E1-08** — Crear el modelo `SaleRecord.java`: campos `transactionId`, `timestamp`, `items` (lista de `LineItem`), `total`, `paymentMethod`. *(REQ 1.6)*
-- [ ] **TASK-E1-09** — Crear el enum `PaymentMethod.java`: `CASH`, `CARD`, `TRANSFER`.
-- [ ] **TASK-E1-10** — Crear la interfaz `IndexedFileStore<K, V>` con métodos: `insert(K key, V record)`, `update(K key, V record)`, `delete(K key)`, `findByKey(K key)`, `readAll()`, `close()`. *(REQ 1.1)*
+- [x] **TASK-E1-06** — Crear el modelo `ProductRecord.java`: campos `sku`, `name`, `price`, `category`, `description`, `deleted`, con serialización binaria (`Serializable`). *(REQ 1.1)*
+- [x] **TASK-E1-07** — Crear el modelo `InventoryRecord.java`: campos `sku`, `quantity`, `outOfStock`, `lastUpdated`, con serialización binaria. *(REQ 1.2)*
+- [x] **TASK-E1-08** — Crear el modelo `SaleRecord.java`: campos `transactionId`, `timestamp`, `items` (lista de `LineItem`), `total`, `paymentMethod`. *(REQ 1.6)*
+- [x] **TASK-E1-09** — Crear el enum `PaymentMethod.java`: `CASH`, `CARD`, `TRANSFER`.
+- [x] **TASK-E1-10** — Crear la interfaz `IndexedFileStore<K, V>` con métodos: `insert(K key, V record)`, `update(K key, V record)`, `delete(K key)`, `findByKey(K key)`, `readAll()`, `close()`. *(REQ 1.1)*
 - [ ] **TASK-E1-11** — Implementar `BTreeIndexedFileStore<K, V>` que persiste registros en archivo binario usando índice B-tree en memoria serializado a disco. *(REQ 1.1 — O(log n))*
 - [ ] **TASK-E1-12** — Implementar `HashIndexedFileStore<K, V>` alternativa con índice hash para búsquedas O(1). *(REQ 1.1)*
 - [ ] **TASK-E1-13** — Implementar mecanismo de **file locking** (`FileLock` de NIO) para prevenir escrituras concurrentes. *(REQ 1.2)*
