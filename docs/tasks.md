@@ -94,29 +94,29 @@ Cada tarea incluye: identificador, descripción, capa/componente afectado y crit
 
 ### E1-G4: Módulo `pukio-pos-client` — Terminal de Ventas Local
 
-- [ ] **TASK-E1-24** — Crear la clase principal `PosClientApplication.java` con menú de consola para operaciones de venta.
-- [ ] **TASK-E1-25** — Implementar `SaleService.java`: método `processSale(sku, quantity, paymentMethod)`. *(REQ 1.6)*
+- [x] **TASK-E1-24** — Crear la clase principal `PosClientApplication.java` con menú de consola para operaciones de venta.
+- [x] **TASK-E1-25** — Implementar `SaleService.java`: método `processSale(sku, quantity, paymentMethod)`. *(REQ 1.6)*
   - Leer precio desde `IndexedFileStore<String, ProductRecord>` usando índice (SKU).
   - Verificar stock en `IndexedFileStore<String, InventoryRecord>`.
   - Calcular total de todos los ítems de la venta.
   - Registrar pago (método de pago).
   - Escribir `SaleRecord` en archivo indexado de ventas.
   - Decrementar inventario en archivo indexado.
-- [ ] **TASK-E1-26** — Implementar generación de recibo de venta en consola con: ID transacción, timestamp, ítems, total, método de pago. *(REQ 1.6)*
-- [ ] **TASK-E1-27** — Escribir tests unitarios para `SaleService` con mocks del `IndexedFileStore`. *(REQ 1.6)*
+- [x] **TASK-E1-26** — Implementar generación de recibo de venta en consola con: ID transacción, timestamp, ítems, total, método de pago. *(REQ 1.6)*
+- [x] **TASK-E1-27** — Escribir tests unitarios para `SaleService` con mocks del `IndexedFileStore`. *(REQ 1.6)*
 
 ---
 
 ### E1-G5: Módulo `pukio-send-service` — Servicio de Envío TCP
 
-- [ ] **TASK-E1-28** — Crear la clase principal `SendServiceApplication.java` como programa independiente ejecutable (JAR con main). *(REQ 1.3)*
-- [ ] **TASK-E1-29** — Implementar `FileSender.java`: leer completamente los archivos indexados locales (productos, inventario). *(REQ 1.3)*
-- [ ] **TASK-E1-30** — Implementar conexión TCP a `Data_Server` via `java.net.Socket` con host y puerto configurables (`application.properties`). *(REQ 1.3)*
-- [ ] **TASK-E1-31** — Implementar transmisión del contenido del archivo via `OutputStream` del socket. *(REQ 1.3)*
-- [ ] **TASK-E1-32** — Implementar recepción del ACK/NACK desde `Update_Service` via `InputStream`. *(REQ 1.3)*
-- [ ] **TASK-E1-33** — Implementar lógica de **retry x3 con exponential backoff** ante fallos de conexión: intentos a 1s, 2s, 4s. *(REQ 1.3)*
-- [ ] **TASK-E1-34** — Implementar logging de cada intento: timestamp, host destino, estado (éxito/error), registros enviados. *(REQ 1.3)*
-- [ ] **TASK-E1-35** — Escribir tests unitarios para `FileSender` con socket mockeado. *(REQ 1.3)*
+- [x] **TASK-E1-28** — Crear la clase principal `SendServiceApplication.java` como programa independiente ejecutable (JAR con main). *(REQ 1.3)*
+- [x] **TASK-E1-29** — Implementar `FileSender.java`: leer completamente los archivos indexados locales (productos, inventario). *(REQ 1.3)*
+- [x] **TASK-E1-30** — Implementar conexión TCP a `Data_Server` via `java.net.Socket` con host y puerto configurables (`application.properties`). *(REQ 1.3)*
+- [x] **TASK-E1-31** — Implementar transmisión del contenido del archivo via `OutputStream` del socket. *(REQ 1.3)*
+- [x] **TASK-E1-32** — Implementar recepción del ACK/NACK desde `Update_Service` via `InputStream`. *(REQ 1.3)*
+- [x] **TASK-E1-33** — Implementar lógica de **retry x3 con exponential backoff** ante fallos de conexión: intentos a 1s, 2s, 4s. *(REQ 1.3)*
+- [x] **TASK-E1-34** — Implementar logging de cada intento: timestamp, host destino, estado (éxito/error), registros enviados. *(REQ 1.3)*
+- [x] **TASK-E1-35** — Escribir tests unitarios para `FileSender` con socket mockeado. *(REQ 1.3)*
 
 ---
 
