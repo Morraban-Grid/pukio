@@ -71,11 +71,11 @@ Cada tarea incluye: identificador, descripción, capa/componente afectado y crit
 - [x] **TASK-E1-08** — Crear el modelo `SaleRecord.java`: campos `transactionId`, `timestamp`, `items` (lista de `LineItem`), `total`, `paymentMethod`. *(REQ 1.6)*
 - [x] **TASK-E1-09** — Crear el enum `PaymentMethod.java`: `CASH`, `CARD`, `TRANSFER`.
 - [x] **TASK-E1-10** — Crear la interfaz `IndexedFileStore<K, V>` con métodos: `insert(K key, V record)`, `update(K key, V record)`, `delete(K key)`, `findByKey(K key)`, `readAll()`, `close()`. *(REQ 1.1)*
-- [ ] **TASK-E1-11** — Implementar `BTreeIndexedFileStore<K, V>` que persiste registros en archivo binario usando índice B-tree en memoria serializado a disco. *(REQ 1.1 — O(log n))*
+- [x] **TASK-E1-11** — Implementar `BTreeIndexedFileStore<K, V>` que persiste registros en archivo binario usando índice B-tree en memoria serializado a disco. *(REQ 1.1 — O(log n))*
 - [ ] **TASK-E1-12** — Implementar `HashIndexedFileStore<K, V>` alternativa con índice hash para búsquedas O(1). *(REQ 1.1)*
-- [ ] **TASK-E1-13** — Implementar mecanismo de **file locking** (`FileLock` de NIO) para prevenir escrituras concurrentes. *(REQ 1.2)*
-- [ ] **TASK-E1-14** — Implementar soporte de **lecturas concurrentes** con `ReadWriteLock`. *(REQ 1.2)*
-- [ ] **TASK-E1-15** — Implementar **soft-delete**: el método `delete()` marca `deleted=true` sin borrar físicamente el registro. *(REQ 1.1)*
+- [x] **TASK-E1-13** — Implementar mecanismo de **file locking** (`FileLock` de NIO) para prevenir escrituras concurrentes. *(REQ 1.2)*
+- [x] **TASK-E1-14** — Implementar soporte de **lecturas concurrentes** con `ReadWriteLock`. *(REQ 1.2)*
+- [x] **TASK-E1-15** — Implementar **soft-delete**: el método `delete()` marca `deleted=true` sin borrar físicamente el registro. *(REQ 1.1)*
 - [ ] **TASK-E1-16** — Escribir tests unitarios para `BTreeIndexedFileStore`: insert, update, delete, findByKey, concurrencia. *(REQ 1.1, 1.2)*
 
 ---
