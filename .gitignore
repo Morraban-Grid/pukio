@@ -30,3 +30,4 @@ application-secrets.properties
 k8s/**/secret.yaml
 ssl/
 secrets/
+wsl.localhost/
