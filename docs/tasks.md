@@ -122,18 +122,18 @@ Cada tarea incluye: identificador, descripción, capa/componente afectado y crit
 
 ### E1-G6: Módulo `pukio-update-service` — Servicio de Recepción y Actualización
 
-- [ ] **TASK-E1-36** — Crear la clase principal `UpdateServiceApplication.java` como servidor TCP independiente (`ServerSocket`). *(REQ 1.4)*
-- [ ] **TASK-E1-37** — Implementar `FileReceiver.java`: escuchar en puerto TCP configurado, aceptar conexiones entrantes. *(REQ 1.4)*
-- [ ] **TASK-E1-38** — Implementar `IndexedFileParser.java`: parsear la estructura binaria del archivo recibido y extraer `ProductRecord` e `InventoryRecord`. *(REQ 1.4)*
-- [ ] **TASK-E1-39** — Configurar conexión JDBC a PostgreSQL 18.1 (`spring-boot-starter-data-jpa` + `postgresql` driver). *(REQ 1.5)*
-- [ ] **TASK-E1-40** — Crear script SQL `schema-e1.sql`: tablas `products` y `inventory` con índices en `sku` y `store_id`. *(REQ 1.5)*
-- [ ] **TASK-E1-41** — Implementar `ProductSyncRepository.java`: operaciones `upsert` (INSERT … ON CONFLICT DO UPDATE) para tabla `products`. *(REQ 1.4)*
-- [ ] **TASK-E1-42** — Implementar `InventorySyncRepository.java`: operaciones `upsert` para tabla `inventory`. *(REQ 1.4)*
-- [ ] **TASK-E1-43** — Envolver todas las operaciones de base de datos dentro de una **única transacción** con `@Transactional`. *(REQ 1.4)*
-- [ ] **TASK-E1-44** — Implementar **rollback completo** si cualquier operación de la transacción falla. *(REQ 1.4)*
-- [ ] **TASK-E1-45** — Enviar ACK (éxito + conteo de registros procesados) o NACK (mensaje de error) al `Send_Service`. *(REQ 1.4)*
-- [ ] **TASK-E1-46** — Implementar logging de cada archivo recibido: origen (store_id), timestamp, conteo de registros. *(REQ 1.4)*
-- [ ] **TASK-E1-47** — Escribir tests de integración para `UpdateService` con base de datos H2 embebida (solo para testing). *(REQ 1.4, 1.5)*
+- [x] **TASK-E1-36** — Crear la clase principal `UpdateServiceApplication.java` como servidor TCP independiente (`ServerSocket`). *(REQ 1.4)*
+- [x] **TASK-E1-37** — Implementar `FileReceiver.java`: escuchar en puerto TCP configurado, aceptar conexiones entrantes. *(REQ 1.4)*
+- [x] **TASK-E1-38** — Implementar `IndexedFileParser.java`: parsear la estructura binaria del archivo recibido y extraer `ProductRecord` e `InventoryRecord`. *(REQ 1.4)*
+- [x] **TASK-E1-39** — Configurar conexión JDBC a PostgreSQL 18.1 (`spring-boot-starter-data-jpa` + `postgresql` driver). *(REQ 1.5)*
+- [x] **TASK-E1-40** — Crear script SQL `schema-e1.sql`: tablas `products` y `inventory` con índices en `sku` y `store_id`. *(REQ 1.5)*
+- [x] **TASK-E1-41** — Implementar `ProductSyncRepository.java`: operaciones `upsert` (INSERT … ON CONFLICT DO UPDATE) para tabla `products`. *(REQ 1.4)*
+- [x] **TASK-E1-42** — Implementar `InventorySyncRepository.java`: operaciones `upsert` para tabla `inventory`. *(REQ 1.4)*
+- [x] **TASK-E1-43** — Envolver todas las operaciones de base de datos dentro de una **única transacción** con `@Transactional`. *(REQ 1.4)*
+- [x] **TASK-E1-44** — Implementar **rollback completo** si cualquier operación de la transacción falla. *(REQ 1.4)*
+- [x] **TASK-E1-45** — Enviar ACK (éxito + conteo de registros procesados) o NACK (mensaje de error) al `Send_Service`. *(REQ 1.4)*
+- [x] **TASK-E1-46** — Implementar logging de cada archivo recibido: origen (store_id), timestamp, conteo de registros. *(REQ 1.4)*
+- [x] **TASK-E1-47** — Escribir tests de integración para `UpdateService` con base de datos H2 embebida (solo para testing). *(REQ 1.4, 1.5)*
 
 ---
 
@@ -827,3 +827,4 @@ Estas tareas no pertenecen a un entregable específico sino al proyecto completo
 
 *Documento generado para el proyecto **Pukio** — Sistema POS Minorista*
 *Total de tareas: 89 originales + 38 de seguridad = 127 tareas (E1: 57 · E2: 42 · E3: 48 · E4: 106 · Transversales: 3)*
+
