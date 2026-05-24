@@ -139,18 +139,18 @@ Cada tarea incluye: identificador, descripción, capa/componente afectado y crit
 
 ### E1-G7: Base de Datos y Configuración
 
-- [ ] **TASK-E1-48** — Configurar instancia local PostgreSQL 18.1 con base de datos `pukio_central`.
-- [ ] **TASK-E1-49** — Crear usuario PostgreSQL `pukio_user` con contraseña y permisos sobre `pukio_central`.
-- [ ] **TASK-E1-50** — Ejecutar `schema-e1.sql`: crear tablas `products`, `inventory` con restricciones e índices. *(REQ 1.5)*
+- [x] **TASK-E1-48** — Configurar instancia local PostgreSQL 18.1 con base de datos `pukio_central`.
+- [x] **TASK-E1-49** — Crear usuario PostgreSQL `pukio_user` con contraseña y permisos sobre `pukio_central`.
+- [x] **TASK-E1-50** — Ejecutar `schema-e1.sql`: crear tablas `products`, `inventory` con restricciones e índices. *(REQ 1.5)*
 - [x] **TASK-E1-51** — Documentar procedimiento de instalación y ejecución del Entregable 1 en `README.md`.
 
 ---
 
 ### E1-G8-SEC: Seguridad de Credenciales — Verificación Final Entregable 1
 
-- [ ] **TASK-E1-SEC-07** — Confirmar que los archivos `application-secrets.properties` de todos los módulos están en `.gitignore` y que `git status` no los muestra como tracked. *(REQ 7.1)*
-- [ ] **TASK-E1-SEC-08** — Confirmar que `application.properties` de `pukio-update-service` (el módulo con conexión JDBC) usa `${DB_USERNAME}` y `${DB_PASSWORD}` y no contiene credenciales en texto plano. *(REQ 7.2)*
-- [ ] **TASK-E1-SEC-09** — Confirmar que `application.properties` de `pukio-send-service` usa `${SERVER_HOST}` y `${SERVER_PORT}` y que no hay IPs ni puertos hardcodeados en el código Java. *(REQ 7.2)*
+- [x] **TASK-E1-SEC-07** — Confirmar que los archivos `application-secrets.properties` de todos los módulos están en `.gitignore` y que `git status` no los muestra como tracked. *(REQ 7.1)*
+- [x] **TASK-E1-SEC-08** — Confirmar que `application.properties` de `pukio-update-service` (el módulo con conexión JDBC) usa `${DB_USERNAME}` y `${DB_PASSWORD}` y no contiene credenciales en texto plano. *(REQ 7.2)*
+- [x] **TASK-E1-SEC-09** — Confirmar que `application.properties` de `pukio-send-service` usa `${SERVER_HOST}` y `${SERVER_PORT}` y que no hay IPs ni puertos hardcodeados en el código Java. *(REQ 7.2)*
 
 ---
 
