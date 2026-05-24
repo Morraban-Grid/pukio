@@ -142,7 +142,7 @@ Cada tarea incluye: identificador, descripción, capa/componente afectado y crit
 - [ ] **TASK-E1-48** — Configurar instancia local PostgreSQL 18.1 con base de datos `pukio_central`.
 - [ ] **TASK-E1-49** — Crear usuario PostgreSQL `pukio_user` con contraseña y permisos sobre `pukio_central`.
 - [ ] **TASK-E1-50** — Ejecutar `schema-e1.sql`: crear tablas `products`, `inventory` con restricciones e índices. *(REQ 1.5)*
-- [ ] **TASK-E1-51** — Documentar procedimiento de instalación y ejecución del Entregable 1 en `README.md`.
+- [x] **TASK-E1-51** — Documentar procedimiento de instalación y ejecución del Entregable 1 en `README.md`.
 
 ---
 
