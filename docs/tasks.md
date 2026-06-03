@@ -5,7 +5,7 @@
 | Símbolo | Significado |
 |---------|-------------|
 | `[ ]`   | Tarea pendiente |
-| `[x]`   | Tarea completada |
+| `[x]`   | Tarea completada 
 | **TASK-E1-XX** | Entregable 1, tarea número XX |
 | **TASK-E2-XX** | Entregable 2, tarea número XX |
 | **TASK-E3-XX** | Entregable 3, tarea número XX |
@@ -25,6 +25,8 @@ Cada tarea incluye: identificador, descripción, capa/componente afectado y crit
 - [x] **TASK-E1-03** — Crear los módulos Maven vacíos: `pukio-common`, `pukio-maintenance`, `pukio-pos-client`, `pukio-send-service`, `pukio-update-service`.
 - [x] **TASK-E1-04** — Configurar dependencias comunes en el Parent POM: `spring-boot-starter`, `spring-boot-starter-test`, `lombok`, `slf4j`.
 - [x] **TASK-E1-05** — Crear el archivo `README.md` raíz con descripción del proyecto y guía de ejecución del Entregable 1.
+
+---
 
 ---
 
@@ -158,75 +160,92 @@ Cada tarea incluye: identificador, descripción, capa/componente afectado y crit
 
 ### E2-G1: Refactorización y Nuevos Módulos
 
-- [ ] **TASK-E2-01** — Crear módulo Maven `pukio-app-server` (Application_Server — Spring Boot 3.3.5).
-- [ ] **TASK-E2-02** — Refactorizar `pukio-pos-client`: eliminar toda lógica de negocio local, toda referencia a `IndexedFileStore`. El cliente solo debe contener UI y cliente HTTP. *(REQ 2.1)*
-- [ ] **TASK-E2-03** — Crear módulo Maven `pukio-analytics` (Analytics_Server / Data Warehouse).
-- [ ] **TASK-E2-04** — Agregar dependencias al `pukio-app-server`: `spring-boot-starter-web`, `spring-boot-starter-data-jpa`, `spring-boot-starter-validation`, `postgresql`.
+- [x] **TASK-E2-01** — Crear módulo Maven `pukio-app-server` (Application_Server — Spring Boot 3.3.5).
+- [x] **TASK-E2-02** — Refactorizar `pukio-pos-client`: eliminar toda lógica de negocio local, toda referencia a `IndexedFileStore`. El cliente solo debe contener UI y cliente HTTP. *(REQ 2.1)*
+- [x] **TASK-E2-03** — Crear módulo Maven `pukio-analytics` (Analytics_Server / Data Warehouse).
+- [x] **TASK-E2-04** — Agregar dependencias al `pukio-app-server`: `spring-boot-starter-web`, `spring-boot-starter-data-jpa`, `spring-boot-starter-validation`, `postgresql`.
 
 ---
 
 ### E2-G2: Application_Server — Capa de Persistencia
 
-- [ ] **TASK-E2-05** — Crear script SQL `schema-e2.sql`: tablas `products`, `inventory`, `stores`, `sales`, `sale_items`, `payments`, `promotions`, `arqueo` con claves foráneas e índices. *(REQ 2.6)*
-- [ ] **TASK-E2-06** — Crear entidades JPA: `Product.java`, `Inventory.java`, `Store.java`, `Sale.java`, `SaleItem.java`, `Payment.java`, `Promotion.java`, `Arqueo.java`. *(REQ 2.6)*
-- [ ] **TASK-E2-07** — Crear repositorios Spring Data JPA: `ProductRepository`, `InventoryRepository`, `SaleRepository`, `PromotionRepository`, `ArqueoRepository`. *(REQ 2.6)*
-- [ ] **TASK-E2-08** — Configurar **HikariCP connection pool** en `application.properties` (max pool size, timeout, etc.). *(REQ 2.6)*
-- [ ] **TASK-E2-09** — Configurar **índices adicionales** en el script SQL: `(sku)`, `(transaction_date)`, `(store_id)`. *(REQ 2.6)*
+- [x] **TASK-E2-05** — Crear script SQL `schema-e2.sql`: tablas `products`, `inventory`, `stores`, `sales`, `sale_items`, `payments`, `promotions`, `arqueo` con claves foráneas e índices. *(REQ 2.6)*
+- [x] **TASK-E2-06** — Crear entidades JPA: `Product.java`, `Inventory.java`, `Store.java`, `Sale.java`, `SaleItem.java`, `Payment.java`, `Promotion.java`, `Arqueo.java`, `AuditLog.java`. *(REQ 2.6)*
+- [x] **TASK-E2-07** — Crear repositorios Spring Data JPA: `ProductRepository`, `InventoryRepository`, `SaleRepository`, `PromotionRepository`, `ArqueoRepository`, `AuditLogRepository`. *(REQ 2.6)*
+- [x] **TASK-E2-08** — Configurar **HikariCP connection pool** en `application.properties` (max pool size, timeout, etc.). *(REQ 2.6)*
+- [x] **TASK-E2-09** — Configurar **índices adicionales** en el script SQL: `(sku)`, `(transaction_date)`, `(store_id)`. *(REQ 2.6)*
 
 ---
 
 ### E2-G3: Application_Server — Lógica de Negocio
 
-- [ ] **TASK-E2-10** — Implementar `ProductService.java` (server-side): `createProduct()`, `updateProduct()`, `deactivateProduct()`, `findBySku()`, búsqueda por nombre/categoría, paginación (50 por página). *(REQ 5.1)*
-- [ ] **TASK-E2-11** — Implementar `InventoryService.java`: `checkStock()`, `decrementStock()` con **lock pesimista** (`SELECT FOR UPDATE`), `adjustInventory()`, `transferStock()`. *(REQ 2.3, 5.2)*
-- [ ] **TASK-E2-12** — Implementar `PromotionService.java`: `evaluatePromotions(saleItems)` — evalúa todas las promociones activas, aplica la más beneficiosa, registra promoción aplicada. *(REQ 2.4, 5.4)*
+- [x] **TASK-E2-10** — Implementar `ProductService.java` (server-side): `createProduct()`, `updateProduct()`, `deactivateProduct()`, `findBySku()`, búsqueda por nombre/categoría, paginación (50 por página). *(REQ 5.1)*
+- [x] **TASK-E2-11** — Implementar `InventoryService.java`: `checkStock()`, `decrementStock()` con **lock pesimista** (`SELECT FOR UPDATE`), `adjustInventory()`, `transferStock()`. *(REQ 2.3, 5.2)*
+- [x] **TASK-E2-12** — Implementar `PromotionService.java`: `evaluatePromotions(saleItems)` — evalúa todas las promociones activas, aplica la más beneficiosa, registra promoción aplicada. *(REQ 2.4, 5.4)*
   - Soportar tipos: porcentaje, monto fijo, compra X lleva Y.
   - Validar vigencia (fecha inicio/fin) y monto mínimo.
-- [ ] **TASK-E2-13** — Implementar `SaleService.java` (server-side): orquesta validación de SKU, verificación de stock, aplicación de promociones, cálculo de total con impuestos, persistencia atómica de venta + ítems + pagos + actualización de inventario. *(REQ 2.2, 2.3, 5.3)*
-- [ ] **TASK-E2-14** — Implementar soporte de **pago dividido** (split payment): validar que suma de métodos de pago == total de venta. *(REQ 5.3)*
-- [ ] **TASK-E2-15** — Implementar `ArqueoService.java`: calcular montos esperados por método de pago por turno, comparar con montos declarados, calcular varianza, persistir resultado, flag si varianza > umbral. *(REQ 2.5, 5.5)*
-- [ ] **TASK-E2-16** — Escribir tests unitarios para `SaleService`, `PromotionService`, `ArqueoService` con Mockito. *(REQ 2.2, 2.4, 2.5)*
-- [ ] **TASK-E2-17** — Escribir tests de integración con `@SpringBootTest` + Testcontainers (PostgreSQL). *(REQ 2.6)*
+- [x] **TASK-E2-13** — Implementar `SaleService.java` (server-side): orquesta validación de SKU, verificación de stock, aplicación de promociones, cálculo de total con impuestos, persistencia atómica de venta + ítems + pagos + actualización de inventario. *(REQ 2.2, 2.3, 5.3)*
+- [x] **TASK-E2-14** — Implementar soporte de **pago dividido** (split payment): validar que suma de métodos de pago == total de venta. *(REQ 5.3)*
+- [x] **TASK-E2-15** — Implementar `ArqueoService.java`: calcular montos esperados por método de pago por turno, comparar con montos declarados, calcular varianza, persistir resultado, flag si varianza > umbral. *(REQ 2.5, 5.5)*
+- [x] **TASK-E2-16** — Escribir tests unitarios para `SaleService`, `PromotionService`, `ArqueoService` con Mockito. *(REQ 2.2, 2.4, 2.5)*
+- [x] **TASK-E2-17** — Escribir tests de integración con `@SpringBootTest` + Testcontainers (PostgreSQL). *(REQ 2.6)*
 
 ---
 
 ### E2-G4: Application_Server — Capa REST
 
-- [ ] **TASK-E2-18** — Implementar `ProductController.java`: endpoints `GET /api/products`, `GET /api/products/{sku}`, `POST /api/products`, `PUT /api/products/{sku}`, `DELETE /api/products/{sku}`. *(REQ 5.1)*
-- [ ] **TASK-E2-19** — Implementar `SaleController.java`: endpoint `POST /api/sales/process` (recibe SKU, cantidad, método de pago; retorna confirmación con transactionId). *(REQ 2.2)*
-- [ ] **TASK-E2-20** — Implementar `InventoryController.java`: endpoints para consultar stock, ajuste manual, transferencia entre tiendas. *(REQ 5.2)*
-- [ ] **TASK-E2-21** — Implementar `PromotionController.java`: CRUD de promociones, listado de activas. *(REQ 5.4)*
-- [ ] **TASK-E2-22** — Implementar `ArqueoController.java`: `POST /api/arqueo/start`, `POST /api/arqueo/close`. *(REQ 2.5)*
-- [ ] **TASK-E2-23** — Implementar manejo global de excepciones con `@ControllerAdvice`: errores de validación, stock insuficiente, SKU duplicado, errores de BD. *(REQ 5.9)*
-- [ ] **TASK-E2-24** — Añadir validación de entrada con Bean Validation (`@NotBlank`, `@Positive`, `@Valid`) en todos los DTOs. *(REQ 2.2)*
+- [x] **TASK-E2-18** — Implementar `ProductController.java`: endpoints `GET /api/products`, `GET /api/products/{sku}`, `POST /api/products`, `PUT /api/products/{sku}`, `DELETE /api/products/{sku}`. *(REQ 5.1)*
+- [x] **TASK-E2-19** — Implementar `SaleController.java`: endpoint `POST /api/sales/process` (recibe SKU, cantidad, método de pago; retorna confirmación con transactionId). *(REQ 2.2)*
+- [x] **TASK-E2-20** — Implementar `InventoryController.java`: endpoints para consultar stock, ajuste manual, transferencia entre tiendas. *(REQ 5.2)*
+- [x] **TASK-E2-21** — Implementar `PromotionController.java`: CRUD de promociones, listado de activas. *(REQ 5.4)*
+- [x] **TASK-E2-22** — Implementar `ArqueoController.java`: `POST /api/arqueo/start`, `POST /api/arqueo/close`. *(REQ 2.5)*
+- [x] **TASK-E2-23** — Implementar manejo global de excepciones con `@ControllerAdvice`: errores de validación, stock insuficiente, SKU duplicado, errores de BD. *(REQ 5.9)*
+- [x] **TASK-E2-24** — Añadir validación de entrada con Bean Validation (`@NotBlank`, `@Positive`, `@Valid`) en todos los DTOs. *(REQ 2.2)*
 
 ---
 
 ### E2-G5: POS_Client — Cliente Ligero
 
-- [ ] **TASK-E2-25** — Implementar `AppServerClient.java`: cliente HTTP (`RestTemplate` o `WebClient`) que apunta al `Application_Server`. *(REQ 2.1)*
-- [ ] **TASK-E2-26** — Implementar UI de venta refactorizada: capturar SKU + cantidad + método de pago → delegar al `AppServerClient` → mostrar respuesta. *(REQ 2.1)*
-- [ ] **TASK-E2-27** — Verificar que el cliente NO realiza cálculos ni validaciones locales. *(REQ 2.1)*
-- [ ] **TASK-E2-28** — Implementar visualización del recibo recibido desde el servidor. *(REQ 2.2)*
+- [x] **TASK-E2-25** — Implementar `AppServerClient.java`: cliente HTTP (`RestTemplate` o `WebClient`) que apunta al `Application_Server`. *(REQ 2.1)*
+- [x] **TASK-E2-26** — Implementar UI de venta refactorizada: capturar SKU + cantidad + método de pago → delegar al `AppServerClient` → mostrar respuesta. *(REQ 2.1)*
+- [x] **TASK-E2-26b** — Crear `MainFrame.java` (extiende `JFrame`): ventana principal 1024×768, `BorderLayout`, con `HeaderPanel` al norte, `JMenuBar` como barra de navegación, `CardLayout` en el centro y `StatusBar` al sur. Configurar `setDefaultCloseOperation(EXIT_ON_CLOSE)` y restaurar tamaño/posición desde `java.util.prefs.Preferences`. *(REQ 2.1-UI)*
+- [x] **TASK-E2-26c** — Crear `HeaderPanel.java`: barra superior con `JLabel` para nombre de tienda, cajero, turno, y un `javax.swing.Timer` de 1 segundo que actualiza la hora en pantalla. *(REQ 2.1-UI)*
+- [x] **TASK-E2-26d** — Crear `StatusBar.java`: barra inferior con indicador de conexión (JLabel con ícono verde/rojo), etiqueta de último resultado de operación, y etiqueta de rol del usuario activo. *(REQ 2.1-UI)*
+- [x] **TASK-E2-26e** — Crear `LoginPanel.java`: formulario centrado con `JTextField` (usuario), `JPasswordField` (contraseña) y botón "Iniciar Sesión". Al confirmar, invocar `AppServerClient.login()` en un `SwingWorker`; en éxito, cargar el panel de venta; en fallo, mostrar mensaje de error inline en rojo debajo del formulario sin cerrar el panel. *(REQ 2.1-UI)*
+- [x] **TASK-E2-26f** — Crear `SalePanel.java`: panel dividido en dos columnas (60/40) con `JSplitPane`. Columna izquierda: `JTextField` de SKU (auto-focus al cargar), botón "Agregar", y `JTable` respaldado por `SaleItemTableModel`. Columna derecha: etiquetas de subtotal, descuento, IGV 18%, total (fuente bold 16pt); sección de cobro con `JComboBox` de métodos de pago, `JTextField` de monto tendered con listener que actualiza el vuelto en tiempo real, botón "Pago Dividido" y botón "Cobrar". Botón "Cancelar Venta" con diálogo de confirmación. *(REQ 2.1-UI)*
+- [x] **TASK-E2-26g** — Crear `SaleItemTableModel.java`: extiende `AbstractTableModel` con columnas SKU, Nombre, Cantidad (editable), Precio Unit., Descuento, Subtotal, y columna de botón "Eliminar" renderizada con `ButtonRenderer`/`ButtonEditor`. Sobreescribir `isCellEditable()` para permitir solo edición de Cantidad. *(REQ 2.1-UI)*
+- [x] **TASK-E2-26h** — Crear `SplitPaymentDialog.java`: `JDialog` modal con una fila por método de pago (Efectivo, Tarjeta Crédito, Tarjeta Débito, Transferencia, Billetera Digital), cada fila con `JCheckBox` de habilitación y `JTextField` de monto. Mostrar suma total en tiempo real y deshabilitar "Aceptar" mientras la suma no iguale el total de la venta. *(REQ 2.1-UI)*
+- [x] **TASK-E2-26i** — Crear `ReceiptPanel.java`: panel con `JTextArea` no editable de fuente monoespaciada mostrando todos los campos del recibo (tienda, cajero, fecha, ID transacción, ítems, subtotal, descuento, IGV, total, métodos de pago, vuelto). Botón "Imprimir" usando `java.awt.print.PrinterJob`. Botón "Nueva Venta" que limpia el `SaleItemTableModel` y muestra el `SalePanel`. *(REQ 2.1-UI)*
+- [x] **TASK-E2-26j** — Crear `ProductPanel.java`: barra de búsqueda con `JTextField` de texto libre y `JComboBox` de categoría, botón "Buscar". `JTable` paginada (50 filas) con columnas SKU, Nombre, Categoría, Precio, Stock, Estado. Botones de paginación "Anterior" / "Siguiente" con `JLabel` "Página X de Y". Botones "Nuevo Producto", "Editar" (activo solo con fila seleccionada), "Desactivar" (con diálogo de confirmación). Visible solo para roles Manager y Administrator. *(REQ 2.1-UI, REQ 5.1)*
+- [x] **TASK-E2-26k** — Crear `ProductFormDialog.java`: `JDialog` modal con campos `JTextField` para Nombre, `JTextArea` para Descripción, `JTextField` validado para Precio (solo decimales positivos), `JComboBox` para Categoría, `JTextField` no editable para SKU (habilitado solo en creación). Botón "Seleccionar Imagen" que abre `JFileChooser` filtrado para PNG/JPG y muestra miniatura 80×80 px. Botones "Guardar" (llama al servidor vía `SwingWorker`) y "Cancelar". *(REQ 2.1-UI, REQ 5.1)*
+- [x] **TASK-E2-26l** — Crear `InventoryPanel.java`: `JTable` con columnas SKU, Nombre, Stock Actual, Punto de Reorden, Tienda, Última Actualización. Aplicar `DefaultTableCellRenderer` personalizado que colorea filas: amarillo cuando `stock == reorder_point`, rojo cuando `stock == 0`. Botón "Ajuste Manual" que abre `InventoryAdjustmentDialog`. Visible para roles Supervisor, Manager y Administrator. *(REQ 2.1-UI, REQ 5.2)*
+- [x] **TASK-E2-26m** — Crear `InventoryAdjustmentDialog.java`: `JDialog` modal con `JTextField` de SKU, `JSpinner` de cantidad (permite negativos), `JComboBox` de motivo (Corrección, Merma, Robo, Devolución) y botones "Confirmar" / "Cancelar". Llamar a `AppServerClient.adjustInventory()` en `SwingWorker`. *(REQ 2.1-UI, REQ 5.2)*
+- [x] **TASK-E2-26n** — Crear `ArqueoPanel.java`: tabla de solo lectura con montos esperados por método de pago (cargados del servidor al abrir el panel), campos `JTextField` editables para montos declarados por método, y `JLabel` de varianza por método que se recalcula en tiempo real con `DocumentListener` (color rojo si excede umbral). Botón "Cerrar Turno" que llama a `AppServerClient.submitArqueo()` en `SwingWorker` y muestra resultado. *(REQ 2.1-UI, REQ 5.5)*
+- [x] **TASK-E2-26o** — Crear `PromotionPanel.java`: `JTable` con columnas Nombre, Tipo, Valor, Vigencia, Alcance, Activa. Botones "Nueva Promoción" y "Editar" que abren `PromotionFormDialog`. Visible solo para roles Manager y Administrator. *(REQ 2.1-UI, REQ 5.4)*
+- [x] **TASK-E2-26p** — Crear `PromotionFormDialog.java`: `JDialog` modal con `JTextField` para Nombre, `JComboBox` de Tipo (Porcentaje, Monto Fijo, Compra X lleva Y), `JTextField` para Valor, `JTextField` para Monto Mínimo, dos `JSpinner` de tipo `SpinnerDateModel` para Fecha Inicio y Fecha Fin, `JComboBox` de Tienda (con opción "Todas"), `JCheckBox` Activa. Botones "Guardar" y "Cancelar". *(REQ 2.1-UI, REQ 5.4)*
+- [x] **TASK-E2-26q** — Crear `SwingWorkerTask.java`: clase genérica utilitaria que acepta un `Supplier<T>` (tarea de fondo), un `Consumer<T>` (callback éxito) y un `Consumer<Exception>` (callback error). En `execute()`: deshabilitar el botón pasado como parámetro, mostrar `JProgressBar` indeterminate, y restaurar ambos en `done()`. Usada por todos los paneles para llamadas al servidor. *(REQ 2.1-UI)*
+- [x] **TASK-E2-26r** — Definir atajos de teclado globales en `MainFrame` con `KeyboardFocusManager`: F2 → foco en campo SKU, F4 → abrir ArqueoPanel, F5 → recargar panel activo, Escape → cerrar dialog modal activo, Enter → activar botón de acción primaria del panel activo. *(REQ 2.1-UI)*
+- [x] **TASK-E2-27** — Verificar que el cliente NO realiza cálculos ni validaciones locales. *(REQ 2.1)*
+- [x] **TASK-E2-28** — Implementar visualización del recibo recibido desde el servidor. *(REQ 2.2)*
 
 ---
 
 ### E2-G6: Analytics_Server — Data Warehouse
 
-- [ ] **TASK-E2-29** — Crear script SQL `schema-dw.sql`: tablas `fact_sales`, `dim_time`, `dim_product`, `dim_store`, `dim_payment` (esquema estrella). *(REQ 2.7)*
-- [ ] **TASK-E2-30** — Implementar `DimTimePopulator.java`: poblar `dim_time` con registros para un rango de años. *(REQ 2.7)*
-- [ ] **TASK-E2-31** — Implementar `FactSalesEtlService.java`: al confirmar una venta en `Data_Server`, insertar registro en `fact_sales` del `Analytics_Server` de forma asíncrona (`@Async`). *(REQ 2.7)*
-- [ ] **TASK-E2-32** — Configurar segunda fuente de datos (`DataSource`) en Spring Boot apuntando al `Analytics_Server`. *(REQ 2.7)*
-- [ ] **TASK-E2-33** — Configurar **Apache Superset 6.1.0**: conexión a `Analytics_Server`, crear datasets sobre `fact_sales` y dimensiones. *(REQ 2.8)*
-- [ ] **TASK-E2-34** — Crear dashboards en Superset: tendencia de ventas, top productos, distribución por método de pago, ventas por tienda. *(REQ 2.8)*
-- [ ] **TASK-E2-35** — Implementar queries cross-tab (tabla cruzada) para análisis multidimensional en Superset. *(REQ 2.8)*
+- [x] **TASK-E2-29** — Crear script SQL `schema-dw.sql`: tablas `fact_sales`, `dim_time`, `dim_product`, `dim_store`, `dim_payment` (esquema estrella). *(REQ 2.7)*
+- [x] **TASK-E2-30** — Implementar `DimTimePopulator.java`: poblar `dim_time` con registros para un rango de años. *(REQ 2.7)*
+- [x] **TASK-E2-31** — Implementar `FactSalesEtlService.java`: al confirmar una venta en `Data_Server`, insertar registro en `fact_sales` del `Analytics_Server` de forma asíncrona (`@Async`). *(REQ 2.7)*
+- [x] **TASK-E2-32** — Configurar segunda fuente de datos (`DataSource`) en Spring Boot apuntando al `Analytics_Server`. *(REQ 2.7)*
+- [x] **TASK-E2-33** — Configurar **Apache Superset 6.1.0**: conexión a `Analytics_Server`, crear datasets sobre `fact_sales` y dimensiones. *(REQ 2.8)*
+- [x] **TASK-E2-34** — Crear dashboards en Superset: tendencia de ventas, top productos, distribución por método de pago, ventas por tienda. *(REQ 2.8)*
+- [x] **TASK-E2-35** — Implementar queries cross-tab (tabla cruzada) para análisis multidimensional en Superset. *(REQ 2.8)*
 
 ---
 
 ### E2-G7: Configuración y Documentación
 
-- [ ] **TASK-E2-36** — Crear perfiles Spring (`application-dev.properties`, `application-prod.properties`) con configuración de BD, puertos y timeouts.
-- [ ] **TASK-E2-37** — Actualizar `README.md` con guía de ejecución del Entregable 2.
+- [x] **TASK-E2-36** — Crear perfiles Spring (`application-dev.properties`, `application-prod.properties`) con configuración de BD, puertos y timeouts.
+- [x] **TASK-E2-37** — Actualizar `README.md` con guía de ejecución del Entregable 2.
 
 ---
 
@@ -234,11 +253,11 @@ Cada tarea incluye: identificador, descripción, capa/componente afectado y crit
 
 > En este entregable se incorporan nuevas credenciales: la segunda fuente de datos (Analytics_Server) y el pool de conexiones HikariCP. Todas deben gestionarse como secretos.
 
-- [ ] **TASK-E2-SEC-01** — Ampliar `application-secrets.properties.template` con las nuevas variables del Entregable 2: `ANALYTICS_DB_URL`, `ANALYTICS_DB_USERNAME`, `ANALYTICS_DB_PASSWORD`, `HIKARI_MAX_POOL_SIZE` (si es sensible al entorno). *(REQ 7.1, 7.6)*
-- [ ] **TASK-E2-SEC-02** — Verificar que `application-dev.properties` y `application-prod.properties` (commiteados) no contienen contraseñas ni credenciales; solo referencias `${VAR}` y valores de configuración no sensibles como timeouts o tamaños de página. *(REQ 7.2)*
-- [ ] **TASK-E2-SEC-03** — Verificar que la segunda fuente de datos (`DataSource`) del `Analytics_Server` configurada en TASK-E2-32 usa `${ANALYTICS_DB_PASSWORD}` y no tiene la contraseña hardcodeada en el código Java ni en archivos commiteados. *(REQ 7.2)*
-- [ ] **TASK-E2-SEC-04** — Verificar que la configuración de Apache Superset (conexión a `Analytics_Server`) no almacena la cadena de conexión con contraseña en ningún archivo commiteado; documentar en `docs/security.md` cómo configurar la conexión de Superset localmente. *(REQ 7.1)*
-- [ ] **TASK-E2-SEC-05** — Realizar auditoría de seguridad del Entregable 2: ejecutar `git log --all -- "**/*.properties"` y revisar que ningún commit histórico contiene valores sensibles. *(REQ 7.5)*
+- [x] **TASK-E2-SEC-01** — Ampliar `application-secrets.properties.template` con las nuevas variables del Entregable 2: `ANALYTICS_DB_URL`, `ANALYTICS_DB_USERNAME`, `ANALYTICS_DB_PASSWORD`, `HIKARI_MAX_POOL_SIZE` (si es sensible al entorno). *(REQ 7.1, 7.6)*
+- [x] **TASK-E2-SEC-02** — Verificar que `application-dev.properties` y `application-prod.properties` (commiteados) no contienen contraseñas ni credenciales; solo referencias `${VAR}` y valores de configuración no sensibles como timeouts o tamaños de página. *(REQ 7.2)*
+- [x] **TASK-E2-SEC-03** — Verificar que la segunda fuente de datos (`DataSource`) del `Analytics_Server` configurada en TASK-E2-32 usa `${ANALYTICS_DB_PASSWORD}` y no tiene la contraseña hardcodeada en el código Java ni en archivos commiteados. *(REQ 7.2)*
+- [x] **TASK-E2-SEC-04** — Verificar que la configuración de Apache Superset (conexión a `Analytics_Server`) no almacena la cadena de conexión con contraseña en ningún archivo commiteado; documentar en `docs/security.md` cómo configurar la conexión de Superset localmente. *(REQ 7.1)*
+- [x] **TASK-E2-SEC-05** — Realizar auditoría de seguridad del Entregable 2: ejecutar `git log --all -- "**/*.properties"` y revisar que ningún commit histórico contiene valores sensibles. *(REQ 7.5)*
 
 ---
 

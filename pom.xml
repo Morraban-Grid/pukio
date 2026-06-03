@@ -41,6 +41,8 @@
         <module>pukio-pos-client</module>
         <module>pukio-send-service</module>
         <module>pukio-update-service</module>
+        <module>pukio-app-server</module>
+        <module>pukio-analytics</module>
     </modules>
 
     <dependencyManagement>

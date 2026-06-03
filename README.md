@@ -236,11 +236,281 @@ docker start pukio-postgres
 
 ---
 
+---
+
+## Guía de Instalación y Ejecución — Entregable 2
+
+### Descripción General
+
+El Entregable 2 implementa una arquitectura Cliente/Servidor donde:
+- **POS_Client** es un cliente ligero (solo UI) que delega toda la lógica al servidor
+- **Application_Server** (Spring Boot) centraliza la lógica de negocio y acceso a datos
+- **Data_Server** (PostgreSQL) almacena datos transaccionales
+- **Analytics_Server** (PostgreSQL DW) almacena datos analíticos en esquema estrella
+- **Apache Superset** (opcional) proporciona dashboards y visualización de datos
+
+### Requisitos previos
+
+- Java 21
+- Maven 3.9.9
+- PostgreSQL 18.1 (dos instancias: `pukio_db` y `pukio_analytics`)
+- Apache Superset 6.1.0 (opcional para dashboards)
+- Python 3.9+ (si se usa Superset)
+
+### Paso 1 — Clonar el repositorio
+
+```bash
+git clone git@github.com:Morraban-Grid/pukio.git
+cd pukio
+```
+
+### Paso 2 — Levantar las bases de datos PostgreSQL
+
+**Base de datos transaccional:**
+
+```bash
+docker run -d \
+  --name pukio-db \
+  -e POSTGRES_DB=pukio_db \
+  -e POSTGRES_USER=pukio_user \
+  -e POSTGRES_PASSWORD=pukio_pass \
+  -p 5432:5432 \
+  postgres:18.1
+```
+
+**Base de datos de Analytics (Data Warehouse):**
+
+```bash
+docker run -d \
+  --name pukio-analytics \
+  -e POSTGRES_DB=pukio_analytics \
+  -e POSTGRES_USER=pukio_analytics_user \
+  -e POSTGRES_PASSWORD=analytics_pass \
+  -p 5433:5432 \
+  postgres:18.1
+```
+
+Verificar que ambas están corriendo:
+
+```bash
+docker ps
+```
+
+### Paso 3 — Crear las tablas en ambas bases de datos
+
+**Base de datos transaccional:**
+
+```bash
+docker exec -i pukio-db psql \
+  -U pukio_user \
+  -d pukio_db \
+  < pukio-app-server/src/main/resources/db/schema-e2.sql
+```
+
+**Base de datos Analytics:**
+
+```bash
+docker exec -i pukio-analytics psql \
+  -U pukio_analytics_user \
+  -d pukio_analytics \
+  < pukio-analytics/src/main/resources/db/schema-dw.sql
+```
+
+### Paso 4 — Configurar secretos locales
+
+**pukio-app-server:**
+
+```bash
+cp pukio-app-server/src/main/resources/application-secrets.properties.template \
+   pukio-app-server/src/main/resources/application-secrets.properties
+```
+
+Editar `pukio-app-server/src/main/resources/application-secrets.properties`:
+
+```properties
+# Base de datos transaccional
+DB_USERNAME=pukio_user
+DB_PASSWORD=pukio_pass
+DB_URL=jdbc:postgresql://localhost:5432/pukio_db
+
+# Base de datos Analytics (Data Warehouse)
+ANALYTICS_DB_URL=jdbc:postgresql://localhost:5433/pukio_analytics
+ANALYTICS_DB_USERNAME=pukio_analytics_user
+ANALYTICS_DB_PASSWORD=analytics_pass
+
+# Pool de conexiones HikariCP (opcional, ya tiene defaults en application-dev.properties)
+# HIKARI_MAX_POOL_SIZE=20
+```
+
+**pukio-pos-client:**
+
+```bash
+cp pukio-pos-client/src/main/resources/application-secrets.properties.template \
+   pukio-pos-client/src/main/resources/application-secrets.properties
+```
+
+Editar `pukio-pos-client/src/main/resources/application-secrets.properties`:
+
+```properties
+# URL del Application Server
+APP_SERVER_URL=http://localhost:8080
+```
+
+**pukio-analytics:**
+
+```bash
+cp pukio-analytics/src/main/resources/application-secrets.properties.template \
+   pukio-analytics/src/main/resources/application-secrets.properties
+```
+
+Editar `pukio-analytics/src/main/resources/application-secrets.properties`:
+
+```properties
+ANALYTICS_DB_URL=jdbc:postgresql://localhost:5433/pukio_analytics
+ANALYTICS_DB_USERNAME=pukio_analytics_user
+ANALYTICS_DB_PASSWORD=analytics_pass
+```
+
+### Paso 5 — Compilar el proyecto completo
+
+```bash
+mvn clean install
+```
+
+### Paso 6 — Ejecutar los módulos
+
+Abrir una terminal por cada módulo:
+
+**Terminal 1 — Application Server (servidor Spring Boot con toda la lógica):**
+
+```bash
+cd pukio-app-server
+mvn spring-boot:run
+```
+
+El servidor estará disponible en `http://localhost:8080`
+
+**Terminal 2 — POS Client (cliente ligero con UI Swing):**
+
+```bash
+cd pukio-pos-client
+mvn spring-boot:run
+```
+
+La interfaz gráfica se abrirá automáticamente.
+
+**Terminal 3 (opcional) — Analytics Service (poblar dimensiones del DW):**
+
+```bash
+cd pukio-analytics
+mvn spring-boot:run
+```
+
+Este servicio pobla la tabla `dim_time` al arrancar y queda en ejecución para posibles ETLs adicionales.
+
+### Paso 7 (opcional) — Configurar Apache Superset para dashboards
+
+Si deseas visualizar dashboards analíticos:
+
+1. Instalar Superset:
+
+```bash
+pip install apache-superset==6.1.0
+superset db upgrade
+superset fab create-admin
+superset init
+```
+
+2. Arrancar Superset:
+
+```bash
+superset run -p 8088 --with-threads --reload --debugger
+```
+
+3. Acceder a `http://localhost:8088` y seguir la guía completa en:
+
+```
+docs/superset-setup.md
+```
+
+### Paso 8 — Probar el sistema
+
+1. **Login en POS_Client:** Ingresar usuario y contraseña (autenticación pendiente de implementar en E2, por ahora puede usar credenciales de prueba)
+
+2. **Procesar una venta:**
+   - En el panel de Venta Activa, ingresar SKU de un producto
+   - Añadir cantidad
+   - Seleccionar método de pago
+   - Click en "Cobrar"
+   - Verificar que aparece el recibo
+
+3. **Verificar en la base de datos:**
+
+```bash
+docker exec -it pukio-db psql -U pukio_user -d pukio_db -c "SELECT * FROM sales ORDER BY sale_date DESC LIMIT 5;"
+```
+
+4. **Verificar en el Data Warehouse:**
+
+```bash
+docker exec -it pukio-analytics psql -U pukio_analytics_user -d pukio_analytics -c "SELECT * FROM fact_sales ORDER BY sale_id DESC LIMIT 5;"
+```
+
+### Paso 9 — Detener los servicios
+
+**Detener PostgreSQL:**
+
+```bash
+docker stop pukio-db pukio-analytics
+```
+
+**Detener Superset:**
+
+```bash
+# Ctrl+C en la terminal donde está corriendo
+```
+
+Para volver a levantar las bases de datos:
+
+```bash
+docker start pukio-db pukio-analytics
+```
+
+---
+
+## Perfiles de ejecución (dev / prod)
+
+El Application Server soporta dos perfiles:
+
+**Desarrollo (por defecto):**
+
+```bash
+cd pukio-app-server
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
+```
+
+- Logging verbose (DEBUG level)
+- Pool de conexiones pequeño (5 conexiones transaccional, 2 analytics)
+- Sin caché
+
+**Producción:**
+
+```bash
+cd pukio-app-server
+mvn spring-boot:run -Dspring-boot.run.profiles=prod
+```
+
+- Logging INFO level
+- Pool de conexiones optimizado (20 conexiones transaccional, 5 analytics)
+- Caché habilitado
+
+---
+
 ## Estado del Proyecto por Entregable
 
 | Entregable | Arquitectura | Estado |
 |---|---|---|
 | Entregable 1 | Unitaria con servidor de datos | ✅ Completo |
-| Entregable 2 | Cliente/Servidor | 🔜 Pendiente |
+| Entregable 2 | Cliente/Servidor | 🚧 En progreso (Fase 4B) |
 | Entregable 3 | N-Capas con alta disponibilidad | 🔜 Pendiente |
 | Entregable 4 | Cloud Computing con contenedores | 🔜 Pendiente |

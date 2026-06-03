@@ -321,8 +321,134 @@ graph LR
     subgraph DATA["Data_Server"]
         PGDB[(PostgreSQL 18.1)]
     end
- 
+```
+
+```
     UI -->|HTTP/REST o TCP| PRES
+```
+### Diseño de la Interfaz Gráfica — POS_Client (Swing)
+
+El `POS_Client` implementa una ventana de escritorio Java Swing organizada en los siguientes paneles de navegación, gestionados por un `CardLayout` en el área central:
+
+```mermaid
+graph TD
+    subgraph MAIN_WINDOW["🖥️ Ventana Principal — JFrame (1024×768 mín.)"]
+        HEADER[Header Bar<br/>Tienda · Cajero · Fecha/Hora · Turno]
+        NAV["Navigation Menu Bar<br/>Venta | Productos | Inventario | Arqueo | Promociones"]
+        CARD[Central CardLayout Panel]
+        STATUS[Status Bar<br/>Estado conexión · Último resultado · Rol]
+    end
+
+    CARD --> P_LOGIN[Panel: Login<br/>Usuario · Contraseña · Botón Iniciar Sesión]
+    CARD --> P_SALE[Panel: Venta Activa<br/>SKU Input · Tabla ítems · Totales · Cobrar]
+    CARD --> P_RECEIPT[Panel: Recibo<br/>Detalle transacción · Imprimir · Nueva Venta]
+    CARD --> P_PRODUCTS[Panel: Productos<br/>Búsqueda · Tabla paginada · CRUD dialogs]
+    CARD --> P_INVENTORY[Panel: Inventario<br/>Tabla stock · Alertas color · Ajuste manual]
+    CARD --> P_ARQUEO[Panel: Arqueo de Caja<br/>Resumen esperado · Declarado · Varianza]
+    CARD --> P_PROMOS[Panel: Promociones<br/>Tabla · Nueva/Editar dialogs]
+```
+
+**Layout del Panel de Venta Activa (panel principal)**
+# UI Specifications - POS Checkout Screen
+
+## Layout Wireframe
+```text
+┌─────────────────────────────────────────────────────────────────┐
+│  HEADER: [Tienda: Lima Norte]  [Cajero: Juan][10:45:23][T1]     │
+├────────────────────────────────────┬────────────────────────────┤
+│  SKU: [___] [Agregar]              │  Subtotal:    S/. 0.00     │
+│                                    │  Descuento:   S/. 0.00     │
+│  ┌──────────────────────────────┐  │  IGV (18%):   S/. 0.00     │
+│  │SKU │Nombre│Cant│P.Unit│Sub   │  │  ───────────────────────── │
+│  ├────┼──────┼────┼──────┼──────┤  │  TOTAL:      S/. 0.00      │
+│  │    │      │    │      │ [X]  │  │                            │
+│  │    │      │    │      │ [X]  │  │  Método: [Efectivo    ▼]   │
+│  └──────────────────────────────┘  │  Monto:  [________]        │
+│                                    │  Vuelto: S/. 0.00          │
+│  [Cancelar Venta]                  │  [Pago Dividido]  [Cobrar] │
+├────────────────────────────────────┴────────────────────────────┤
+│  STATUS: [● CONECTADO]  [Última op: OK]  [Rol: Cajero]          │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Clases UI principales (paquete `com.pukio.posclient.ui`)**
+
+```mermaid
+classDiagram
+    class MainFrame {
+        +JMenuBar menuBar
+        +HeaderPanel headerPanel
+        +CardLayout cardLayout
+        +StatusBar statusBar
+        +showPanel(String panelName) void
+        +updateConnectionStatus(boolean) void
+    }
+
+    class SalePanel {
+        +JTextField skuInput
+        +SaleItemTableModel tableModel
+        +JLabel totalLabel
+        +JLabel changeLabel
+        +JComboBox paymentMethodCombo
+        +addItem(sku String) void
+        +removeItem(int row) void
+        +clearSale() void
+    }
+
+    class SaleItemTableModel {
+        +List~SaleItemRow~ items
+        +getColumnCount() int
+        +isCellEditable(row, col) boolean
+        +updateQuantity(row, qty) void
+    }
+
+    class ArqueoPanel {
+        +JTable expectedTable
+        +Map~String,JTextField~ declaredFields
+        +Map~String,JLabel~ varianceLabels
+        +loadExpectedAmounts() void
+        +calculateVariances() void
+        +submitArqueo() void
+    }
+
+    class ProductPanel {
+        +JTextField searchField
+        +JTable productTable
+        +int currentPage
+        +loadPage(int page) void
+        +openProductDialog(Product p) void
+    }
+
+    class AppServerClient {
+        +String baseUrl
+        +processSale(SaleRequest) SaleResponse
+        +getProducts(int page) Page~Product~
+        +getArqueoExpected(shiftId) ArqueoSummary
+        +submitArqueo(ArqueoRequest) ArqueoResult
+    }
+
+    class SwingWorkerTask~T~ {
+        +Supplier~T~ backgroundTask
+        +Consumer~T~ onSuccess
+        +Consumer~Exception~ onError
+        +JButton buttonToDisable
+        +JProgressBar progressBar
+        +doInBackground() T
+        +done() void
+    }
+
+    MainFrame --> SalePanel
+    MainFrame --> ArqueoPanel
+    MainFrame --> ProductPanel
+    SalePanel --> SaleItemTableModel
+    SalePanel --> AppServerClient
+    ArqueoPanel --> AppServerClient
+    ProductPanel --> AppServerClient
+    SalePanel --> SwingWorkerTask
+    ArqueoPanel --> SwingWorkerTask
+    ProductPanel --> SwingWorkerTask
+```
+```
     PRES --> BIZ
     BIZ --> DAL
     DAL -->|JDBC Pool| PGDB

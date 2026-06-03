@@ -1,0 +1,3 @@
+# Este directorio almacena exports de dashboards de Apache Superset
+# Solo se deben subir exports SIN conexiones de base de datos
+# Las conexiones con credenciales deben configurarse localmente

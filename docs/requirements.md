@@ -175,6 +175,74 @@ Pukio es un sistema de Punto de Venta (POS) para tiendas minoristas que evolucio
 
 ---
 
+### Requirement 2.1-UI: Interfaz Gráfica del POS_Client
+
+**User Story:** Como cajero, quiero una interfaz gráfica de ventana intuitiva y completa, para operar el terminal de ventas sin necesidad de usar la línea de comandos.
+
+**Acceptance Criteria:**
+
+- THE POS_Client SHALL implement a desktop graphical user interface using Java Swing (javax.swing).
+- THE POS_Client SHALL display a main window titled "Pukio POS" with a minimum resolution of 1024x768 pixels.
+- THE POS_Client SHALL organize the interface in three persistent panels: a top header bar, a central work area with card layout, and a bottom status bar.
+- THE POS_Client header bar SHALL display: store name, cashier name, current date and time (updated every second), and active shift identifier.
+- THE POS_Client status bar SHALL display: connection status to Application_Server (CONNECTED / DISCONNECTED in green/red), last operation result, and current user role.
+
+**Panel: Login**
+- THE POS_Client SHALL display a login panel on startup with fields: username (JTextField), password (JPasswordField), and a "Iniciar Sesión" button.
+- WHEN login credentials are submitted, THE POS_Client SHALL authenticate against Application_Server and transition to the main sales panel on success.
+- IF login fails, THE POS_Client SHALL display an inline error message below the form fields without closing the panel.
+
+**Panel: Venta Activa (punto de venta principal)**
+- THE POS_Client SHALL display a sales panel divided into two columns: left column (60% width) for the item list, right column (40% width) for totals and payment.
+- THE left column SHALL contain: an SKU input field (JTextField, auto-focused) with a "Agregar" button, and a JTable showing current sale items with columns: SKU, Nombre, Cantidad, Precio Unit., Descuento, Subtotal.
+- THE JTable SHALL allow the cashier to edit the Cantidad column inline by double-clicking the cell.
+- THE JTable SHALL allow removing a line item via a "Eliminar" button in a dedicated column rendered with JButton cell renderer.
+- THE right column SHALL display: subtotal, discount total, tax total (IGV 18%), and grand total — each in a large, clearly labeled JLabel with bold font size 16pt.
+- THE right column SHALL contain a payment section with: a JComboBox for primary payment method (Efectivo, Tarjeta Crédito, Tarjeta Débito, Transferencia, Billetera Digital), a JTextField for the amount tendered, and a "Cobrar" button.
+- THE right column SHALL display a "Vuelto:" label that updates in real time as the cashier types the amount tendered for cash payments.
+- THE right column SHALL contain a "Pago Dividido" button that opens a modal dialog allowing entry of multiple payment methods and amounts, validating that their sum equals grand total before accepting.
+- WHEN the "Cobrar" button is clicked, THE POS_Client SHALL call Application_Server and, on success, display the receipt panel.
+- THE sales panel SHALL contain a "Cancelar Venta" button that clears the current item list after a confirmation dialog.
+
+**Panel: Recibo**
+- THE POS_Client SHALL display a receipt panel after a successful sale with: store name, address, cashier, date/time, transaction ID, itemized list, subtotal, discount, tax, total, payment methods used, and change.
+- THE receipt panel SHALL have a "Imprimir" button that prints the receipt using Java Print API to the default printer.
+- THE receipt panel SHALL have a "Nueva Venta" button that returns focus to the sales panel with a cleared item list.
+
+**Panel: Gestión de Productos (rol Manager y Administrator)**
+- THE POS_Client SHALL display a product management panel accessible from a top navigation menu, visible only to users with Manager or Administrator role.
+- THE product panel SHALL contain a search bar with filters by SKU, name, and category, and a JTable listing results with columns: SKU, Nombre, Categoría, Precio, Stock, Estado.
+- THE product panel SHALL have buttons: "Nuevo Producto", "Editar", "Desactivar" — each opening a modal JDialog form.
+- THE product form dialog SHALL contain fields: SKU (non-editable on edit), Nombre, Descripción (JTextArea), Precio (validated as positive decimal), Categoría (JComboBox), and an image upload button that opens a JFileChooser filtered for PNG/JPG.
+- THE product panel SHALL support pagination showing 50 products per page with Previous/Next navigation buttons.
+
+**Panel: Inventario (rol Supervisor, Manager, Administrator)**
+- THE POS_Client SHALL display an inventory panel with a JTable showing: SKU, Nombre, Stock Actual, Punto de Reorden, Tienda, Última Actualización.
+- THE inventory panel SHALL highlight rows in yellow when stock equals reorder point, and in red when stock is zero.
+- THE inventory panel SHALL have an "Ajuste Manual" button that opens a dialog requiring: SKU, cantidad (positive or negative integer), and reason code (JComboBox: Corrección, Merma, Robo, Devolución).
+
+**Panel: Arqueo de Caja**
+- THE POS_Client SHALL display an arqueo panel accessible from the top navigation menu for Cashier and Supervisor roles.
+- THE arqueo panel SHALL show a read-only summary table of expected amounts by payment method retrieved from Application_Server.
+- THE arqueo panel SHALL have editable JTextField inputs for declared amounts per payment method.
+- THE arqueo panel SHALL display calculated variance per method in real time as the cashier types, coloring the field red if variance exceeds threshold.
+- THE arqueo panel SHALL have a "Cerrar Turno" button that submits the arqueo to Application_Server and shows the result status.
+
+**Panel: Promociones (rol Manager y Administrator)**
+- THE POS_Client SHALL display a promotions panel with a JTable listing promotions: Nombre, Tipo, Valor, Vigencia, Alcance, Estado.
+- THE promotions panel SHALL have "Nueva Promoción" and "Editar" buttons that open a form dialog with fields: Nombre, Tipo (JComboBox: Porcentaje, Monto Fijo, Compra X lleva Y), Valor, Monto Mínimo, Fecha Inicio (JDatePicker), Fecha Fin (JDatePicker), Tienda (JComboBox o "Todas"), Activa (JCheckBox).
+
+**Comportamiento General de la UI**
+- ALL modal dialogs SHALL be centered relative to the main window.
+- ALL JTable columns SHALL be sortable by clicking the column header.
+- ALL network calls from the UI SHALL execute in a SwingWorker background thread to prevent freezing the Event Dispatch Thread.
+- WHILE a network call is in progress, THE POS_Client SHALL display a JProgressBar indeterminate spinner and disable the action button.
+- WHEN Application_Server returns an error, THE POS_Client SHALL display a JOptionPane.showMessageDialog with error type icon and the server error message.
+- THE POS_Client SHALL persist window size and position to a local preferences file using java.util.prefs.Preferences so it restores on next launch.
+- THE POS_Client SHALL support keyboard shortcuts: F2 to focus SKU input field, F4 to open arqueo, F5 to refresh current panel, Escape to cancel/close modal dialogs, Enter to confirm the focused action button.
+
+---
+
 ### Requirement 2.2: Servidor de Aplicaciones con Lógica de Negocio
 
 **User Story:** Como sistema centralizado, quiero procesar toda la lógica de negocio en el servidor, para mantener consistencia y control.
