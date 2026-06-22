@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUKIO - Reportes e Inteligencia</title>
+    
+    <!-- Hojas de Estilo -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        .reports-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        @media (max-width: 1024px) {
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .report-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        .date-filter-form {
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .top-products-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .top-product-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--bg-tertiary);
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+        .top-product-rank {
+            background: var(--accent-orange);
+            color: var(--text-primary);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .top-product-rank.rank-1 { background: gold; color: #000; }
+        .top-product-rank.rank-2 { background: silver; color: #000; }
+        .top-product-rank.rank-3 { background: #cd7f32; color: #fff; }
+        
+        .top-product-details {
+            flex: 1;
+        }
+        .top-product-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .top-product-stats {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        .top-product-total {
+            font-weight: 700;
+            color: var(--success);
+            font-size: 14px;
+        }
+        
+        /* Matriz de Doble Entrada del Cubo OLAP */
+        .olap-table {
+            font-size: 13px;
+        }
+        .olap-table th, .olap-table td {
+            text-align: center;
+            padding: 10px 14px;
+        }
+        .olap-table th:first-child, .olap-table td:first-child {
+            text-align: left;
+            font-weight: 600;
+            background: var(--bg-tertiary);
+        }
+        .olap-table tr:hover td {
+            background: rgba(67, 97, 238, 0.05) !important;
+        }
+        .olap-cell-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .olap-cell-sub {
+            font-size: 10px;
+            color: var(--text-muted);
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <!-- Sidebar Colapsable -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <span class="logo-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="13" y2="17"></line></svg>
+                    </span>
+                    <span>PUKIO <span class="logo-highlight">POS</span></span>
+                </div>
+                <button id="sidebar-toggle-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li class="menu-item">
+                    <a href="dashboard.html">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                        </span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="productos.html">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                        </span>
+                        <span>Productos</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="clientes.html">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </span>
+                        <span>Clientes</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="pos.html">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="12" y1="10" x2="12" y2="18"></line><line x1="8" y1="14" x2="16" y2="14"></line></svg>
+                        </span>
+                        <span>Punto de Venta (POS)</span>
+                    </a>
+                </li>
+                <li class="menu-item active menu-item-reportes">
+                    <a href="reportes.html">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        </span>
+                        <span>Reportes y OLAP</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <p>&copy; 2026 PUKIO Web</p>
+            </div>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main id="content-wrapper">
+            <!-- Barra Superior Navbar -->
+            <header id="navbar">
+                <div class="page-title-area">
+                    <h1>Reportes & Cubo OLAP</h1>
+                </div>
+                <div class="user-profile-area">
+                    <div class="user-info">
+                        <div class="user-name">Cargando...</div>
+                        <div class="user-role">---</div>
+                    </div>
+                    <button id="logout-btn">
+                        <span>Salir</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Cuerpo de la Página -->
+            <div class="content-body">
+                <!-- Secciones de Filtro de Ventas y Top Productos -->
+                <div class="reports-grid">
+                    <!-- Reporte de Ventas por Rango de Fechas -->
+                    <section class="card flex-column">
+                        <div class="report-card-header">
+                            <h2>Historial de Ventas</h2>
+                            <span class="badge badge-info">Filtros</span>
+                        </div>
+                        
+                        <form id="filter-date-form" class="date-filter-form">
+                            <div class="form-group" style="margin-bottom:0; flex:1; min-width:140px;">
+                                <label for="filter-desde" class="form-label">Desde</label>
+                                <input type="date" id="filter-desde" class="form-input">
+                            </div>
+                            <div class="form-group" style="margin-bottom:0; flex:1; min-width:140px;">
+                                <label for="filter-hasta" class="form-label">Hasta</label>
+                                <input type="date" id="filter-hasta" class="form-input">
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="padding:12px 20px;">Filtrar</button>
+                        </form>
+                        
+                        <div class="table-container" style="flex:1; max-height: 400px; overflow-y:auto;">
+                            <table class="table" id="sales-report-table">
+                                <thead>
+                                    <tr>
+                                        <th>Comprobante</th>
+                                        <th>Fecha</th>
+                                        <th>Cliente</th>
+                                        <th>Descuento</th>
+                                        <th>Total</th>
+                                        <th>Método</th>
+                                        <th>Cajero</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                    
+                    <!-- Top Productos más Vendidos -->
+                    <section class="card flex-column" style="justify-content: flex-start;">
+                        <div class="report-card-header">
+                            <h2>Top N Productos</h2>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <label for="top-limit-select" class="form-label" style="margin:0; font-size:12px;">Mostrar:</label>
+                                <select id="top-limit-select" class="form-input" style="width:70px; padding:6px 10px;">
+                                    <option value="3">Top 3</option>
+                                    <option value="5" selected>Top 5</option>
+                                    <option value="10">Top 10</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="top-products-list" id="top-products-container">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Sección del Cubo OLAP -->
+                <section class="card flex-column" style="margin-bottom:24px;">
+                    <div class="report-card-header">
+                        <div>
+                            <h2>Cubo OLAP: Matriz de Ventas por Categoría y Período</h2>
+                            <p style="font-size:12px; color:var(--text-secondary); margin-top:2px;">
+                                Consulta multidimensional agregada desde la tabla cruzada del DWH.
+                            </p>
+                        </div>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <button id="btn-procesar-dwh" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px; font-weight:600;">Procesar DWH (ETL)</button>
+                            <span class="badge badge-success">Crosstab</span>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container" style="overflow-x: auto;">
+                        <table class="table olap-table" id="olap-crosstab-table">
+                            <thead>
+                                <!-- Generada dinámicamente -->
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align: center; color:var(--text-muted); padding:40px;">
+                                        Cargando datos agregados del Cubo OLAP...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="../js/app.js"></script>
+    <script type="module" src="../js/views/reportes.js"></script>
+</body>
+</html>

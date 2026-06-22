@@ -1,0 +1,52 @@
+/* PUKIO POS - Variables CSS (Diseño Global y Paleta) */
+
+:root {
+    /* Paleta de Colores - Sleek Dark Mode */
+    --bg-primary: hsl(224, 25%, 12%);       /* Fondo principal ultra oscuro */
+    --bg-secondary: hsl(224, 20%, 16%);     /* Paneles y cards */
+    --bg-tertiary: hsl(224, 18%, 22%);      /* Inputs, selectores, hover */
+    
+    --text-primary: hsl(210, 40%, 98%);     /* Texto principal brillante */
+    --text-secondary: hsl(215, 20%, 75%);   /* Subtextos o etiquetas */
+    --text-muted: hsl(215, 12%, 50%);       /* Placeholders y datos deshabilitados */
+    
+    /* Acentuados y Botones */
+    --accent: hsl(226, 70%, 55%);           /* Indigo principal */
+    --accent-hover: hsl(226, 70%, 63%);
+    --accent-orange: hsl(28, 95%, 53%);     /* Ámbar naranja (POS, acciones secundarias) */
+    --accent-orange-hover: hsl(28, 95%, 60%);
+    
+    /* Estados del Negocio */
+    --success: hsl(142, 60%, 45%);          /* Operaciones exitosas, ingresos */
+    --success-bg: hsla(142, 60%, 45%, 0.15);
+    --warning: hsl(38, 92%, 50%);           /* Alertas de stock medio, advertencias */
+    --warning-bg: hsla(38, 92%, 50%, 0.15);
+    --danger: hsl(0, 84%, 55%);             /* Productos sin stock, errores */
+    --danger-bg: hsla(0, 84%, 55%, 0.15);
+    
+    /* Bordes y Sombras */
+    --border-color: hsla(210, 20%, 90%, 0.08);
+    --glass-bg: rgba(26, 34, 50, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.06);
+    --glass-blur: blur(12px);
+    
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.5);
+    
+    /* Tipografía y Bordes */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-full: 9999px;
+    
+    /* Transiciones */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Tamaños Estructura */
+    --sidebar-width: 260px;
+    --sidebar-collapsed-width: 70px;
+    --header-height: 70px;
+}

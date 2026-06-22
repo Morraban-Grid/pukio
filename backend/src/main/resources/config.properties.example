@@ -1,0 +1,6 @@
+db.host=localhost
+db.port=1521
+db.service=XEPDB1
+db.user=PUKIO_DB
+db.password=
+cors.allowed.origin=http://localhost:8000
