@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUKIO - Gestión de Clientes</title>
+    
+    <!-- Hojas de Estilo -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Sidebar Colapsable -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <span class="logo-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="13" y2="17"></line></svg>
+                    </span>
+                    <span>PUKIO <span class="logo-highlight">POS</span></span>
+                </div>
+                <button id="sidebar-toggle-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li class="menu-item">
+                    <a href="dashboard.html">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                        </span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="productos.html">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                        </span>
+                        <span>Productos</span>
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <a href="clientes.html">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </span>
+                        <span>Clientes</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="pos.html">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="12" y1="10" x2="12" y2="18"></line><line x1="8" y1="14" x2="16" y2="14"></line></svg>
+                        </span>
+                        <span>Punto de Venta (POS)</span>
+                    </a>
+                </li>
+                <li class="menu-item menu-item-reportes">
+                    <a href="reportes.html">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        </span>
+                        <span>Reportes y OLAP</span>
+                    </a>
+                </li>
+                <li class="menu-item menu-item-usuarios">
+                    <a href="usuarios.html">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 1 0-16 0"></path></svg>
+                        </span>
+                        <span>Usuarios</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <p>&copy; 2026 PUKIO Web</p>
+            </div>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main id="content-wrapper">
+            <!-- Barra Superior Navbar -->
+            <header id="navbar">
+                <div class="page-title-area">
+                    <h1>Base de Clientes</h1>
+                </div>
+                <div class="user-profile-area">
+                    <div class="user-info">
+                        <div class="user-name">Cargando...</div>
+                        <div class="user-role">---</div>
+                    </div>
+                    <button id="logout-btn">
+                        <span>Salir</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Cuerpo del Módulo -->
+            <div class="content-body">
+                <!-- Barra de Acciones y Filtros -->
+                <div class="card" style="margin-bottom: 24px; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <div class="search-container">
+                        <span class="search-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </span>
+                        <input type="text" id="search-input" class="form-input search-input" placeholder="Buscar por DNI/RUC o nombre...">
+                    </div>
+                    
+                    <button id="btn-nuevo-cliente" class="btn btn-primary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        Nuevo Cliente
+                    </button>
+                </div>
+
+                <!-- Tabla de Resultados -->
+                <div class="table-container">
+                    <table class="table" id="clientes-table">
+                        <thead>
+                            <tr>
+                                <th>Tipo Doc</th>
+                                <th>Número Doc</th>
+                                <th>Nombre / Razón Social</th>
+                                <th>Teléfono</th>
+                                <th>Correo Electrónico</th>
+                                <th>Dirección</th>
+                                <th style="text-align: right;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 40px;">
+                                    Cargando listado de clientes...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Formulario de Cliente -->
+    <div class="modal-backdrop" id="cliente-modal-backdrop">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title-text">Registrar Cliente</h2>
+                <button class="modal-close" id="btn-cerrar-modal">&times;</button>
+            </div>
+            <form id="cliente-form">
+                <div class="modal-body" style="display: flex; flex-direction: column; gap: 12px;">
+                    <!-- Campo Oculto para ID -->
+                    <input type="hidden" id="cli-id" value="">
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px;">
+                        <div class="form-group">
+                            <label for="cli-tipodoc" class="form-label">Tipo Doc *</label>
+                            <select id="cli-tipodoc" class="form-input" required>
+                                <option value="DNI">DNI</option>
+                                <option value="RUC">RUC</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cli-numdoc" class="form-label">Número Documento *</label>
+                            <input type="text" id="cli-numdoc" class="form-input" maxlength="11" placeholder="Ej. 12345678" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cli-nombre" class="form-label">Nombre / Razón Social *</label>
+                        <input type="text" id="cli-nombre" class="form-input" placeholder="Nombre completo o nombre comercial" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cli-telefono" class="form-label">Teléfono</label>
+                        <input type="text" id="cli-telefono" class="form-input" placeholder="Ej. 987654321">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cli-correo" class="form-label">Correo Electrónico</label>
+                        <input type="email" id="cli-correo" class="form-input" placeholder="Ej. cliente@correo.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cli-direccion" class="form-label">Dirección</label>
+                        <input type="text" id="cli-direccion" class="form-input" placeholder="Dirección del domicilio o negocio">
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btn-cancelar-modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="../js/app.js"></script>
+    <script type="module" src="../js/views/clientes.js"></script>
+</body>
+</html>

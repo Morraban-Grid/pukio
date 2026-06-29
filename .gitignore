@@ -1,0 +1,16 @@
+# Build output (se regenera con mvn clean package)
+target/
+backend/WEB-INF/classes/
+backend/WEB-INF/lib/
+*.class
+
+# Configuracion sensible (se crea localmente a partir de los .example)
+backend/src/main/resources/config.properties
+frontend/js/config.js
+
+# IDE / SO
+.idea/
+*.iml
+.vscode/
+Thumbs.db
+.DS_Store

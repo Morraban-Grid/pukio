@@ -1,0 +1,205 @@
+/* Dashboard View Styles */
+
+/* Banner de Bienvenida */
+.welcome-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(67, 97, 238, 0.08) 100%);
+    border-left: 4px solid var(--accent);
+    margin-bottom: 30px;
+}
+
+.welcome-text h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.welcome-text p {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.welcome-date {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+/* Grilla de Métricas */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.metric-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 160px;
+}
+
+.metric-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.metric-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.metric-icon {
+    display: inline-flex;
+    padding: 10px;
+    border-radius: var(--radius-md);
+}
+
+.metric-icon.success-icon { background: var(--success-bg); color: var(--success); }
+.metric-icon.accent-icon { background: rgba(67, 97, 238, 0.12); color: var(--accent); }
+.metric-icon.warning-icon { background: var(--warning-bg); color: var(--warning); }
+
+.metric-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 15px 0 5px 0;
+    letter-spacing: -0.5px;
+}
+
+.metric-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* Grilla de detalles inferiores */
+.dashboard-details-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1.2fr;
+    gap: 24px;
+}
+
+@media (max-width: 1024px) {
+    .dashboard-details-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.detail-section h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.list-scroll {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Baldosas de Acceso Rápido */
+.quick-actions-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.quick-actions-section h2 {
+    margin-bottom: 20px;
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    flex: 1;
+}
+
+.action-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    color: var(--text-primary);
+    transition: var(--transition-normal);
+    cursor: pointer;
+    text-align: center;
+}
+
+.action-tile:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md);
+    background: linear-gradient(185deg, var(--bg-tertiary) 0%, rgba(67, 97, 238, 0.04) 100%);
+}
+
+.action-icon {
+    display: flex;
+    padding: 12px;
+    border-radius: var(--radius-md);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    transition: var(--transition-normal);
+}
+
+.action-tile:hover .action-icon {
+    color: var(--text-primary);
+    background: var(--accent);
+    box-shadow: 0 4px 10px rgba(67, 97, 238, 0.25);
+}
+
+/* Tile de POS destaca más */
+.pos-tile:hover .action-icon {
+    background: var(--accent-orange);
+    box-shadow: 0 4px 10px rgba(245, 124, 0, 0.25);
+}
+.pos-tile:hover {
+    border-color: var(--accent-orange);
+}
+
+.action-tile span:not(.action-icon) {
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+/* Estilo para fila resaltada si el stock es 0 */
+.table tr.row-danger td {
+    color: var(--danger);
+    font-weight: 500;
+}
+.table tr.row-warning td {
+    color: var(--warning);
+    font-weight: 500;
+}
+
+/* Efecto pulsante para la métrica de bajo stock si es mayor a 0 */
+.metric-card-alert {
+    border-color: var(--danger);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(239, 68, 68, 0.05) 100%);
+    animation: alertPulse 3s infinite ease-in-out;
+}
+
+@keyframes alertPulse {
+    0%, 100% { box-shadow: var(--shadow-sm); }
+    50% { box-shadow: 0 0 15px rgba(239, 68, 68, 0.2); }
+}
